@@ -14,44 +14,41 @@ namespace prokopyev.Nsudotnet.Enigma {
             byte[] IV = Convert.FromBase64String(tr.ReadLine());
             tr.Dispose();
             ICryptoTransform decryptor = null;
-            
+            SymmetricAlgorithm alg = null;
             switch (type) {
                 case "aes":
-                    using (Aes aes = Aes.Create()) {
+                    Aes aes = Aes.Create();
                         aes.Key = Key;
                         aes.IV = IV;
                         decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-                    }
                     break;
 
                 case "des":
-                    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()) {
-                        des.Key = Key;
-                        des.IV = IV;
-                        decryptor = des.CreateDecryptor(des.Key, des.IV);
-                    }
+                    alg = new DESCryptoServiceProvider();
+                    alg.IV = IV;
+                    alg.Key = Key;
+                    decryptor = alg.CreateDecryptor();
                     break;
             
                 case "rc2":
-                    using (RC2CryptoServiceProvider rc2 = new RC2CryptoServiceProvider()) {
-                        rc2.Key = Key;
-                        rc2.IV = IV;
-                        decryptor = rc2.CreateDecryptor(rc2.Key, rc2.IV);
-                    }
+                    alg = new RC2CryptoServiceProvider();
+                    alg.IV = IV;
+                    alg.Key = Key;
+                    decryptor = alg.CreateDecryptor();
                     break;
 
-
                 case "rijndael":
-                    using (Rijndael r = Rijndael.Create()) {
+                    Rijndael r = Rijndael.Create();
                         r.Key = Key;
                         r.IV = IV;
-                        decryptor = r.CreateDecryptor(r.Key, r.IV);
-                    }
+                        decryptor = r.CreateDecryptor();
+                    
                     break;
                 default:
                     Console.WriteLine("incorrect alghorytm name. use (rijndael, rc2, aes, des)");
                     return;
             }
+            
 
             using (FileStream destination = new FileStream(from, FileMode.Open)) {
                 using (CryptoStream cryptoStream = new CryptoStream(destination, decryptor, CryptoStreamMode.Read)) {

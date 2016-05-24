@@ -14,37 +14,34 @@ namespace prokopyev.Nsudotnet.Enigma{
                 byte[] Key = null;
                 byte[] IV = null;
                 ICryptoTransform encryptor = null;
+                SymmetricAlgorithm alg = null;
                 switch (mode) {
                     case "aes":
-                        using (Aes aes = Aes.Create()) {
+                        Aes aes = Aes.Create();
                             Key = aes.Key;
                             IV = aes.IV;
-                            encryptor = aes.CreateEncryptor(Key, IV);
-                        }
+                            encryptor = aes.CreateEncryptor();
                         break;
 
                     case "des":
-                        using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()) {
-                            Key = des.Key;
-                            IV = des.IV;
-                            encryptor = des.CreateEncryptor(Key, IV);
-                        }
+                        alg = new DESCryptoServiceProvider();
+                            Key = alg.Key;
+                            IV = alg.IV;
+                            encryptor = alg.CreateEncryptor();
                         break;
 
                     case "rc2":
-                        using (RC2CryptoServiceProvider rc2 = new RC2CryptoServiceProvider()) {
-                            Key = rc2.Key;
-                            IV = rc2.IV;
-                            encryptor = rc2.CreateEncryptor(Key, IV);
-                        }
+                        alg = new RC2CryptoServiceProvider();
+                            Key = alg.Key;
+                            IV = alg.IV;
+                            encryptor = alg.CreateEncryptor();
                         break;
 
                     case "rijndael":
-                        using (Rijndael r = Rijndael.Create()) {
+                        Rijndael r = Rijndael.Create();
                             Key = r.Key;
                             IV = r.IV;
-                            encryptor = r.CreateEncryptor(Key, IV);
-                        }
+                            encryptor = r.CreateEncryptor();
                         break;
 
                     default:
@@ -74,7 +71,8 @@ namespace prokopyev.Nsudotnet.Enigma{
                     }
                     Console.WriteLine("key-file created");
                 }
-                encryptor.Dispose();   
+        //        encryptor.Dispose();
+         //       alg.Dispose(); 
             }
             catch (ObjectDisposedException e) {
                 Console.WriteLine("Caught: {0}", e.Message);
