@@ -24,17 +24,19 @@ namespace prokopyev.Nsudotnet.Enigma {
                     break;
 
                 case "des":
-                    alg = new DESCryptoServiceProvider();
-                    alg.IV = IV;
-                    alg.Key = Key;
-                    decryptor = alg.CreateDecryptor();
+                    using (alg = new DESCryptoServiceProvider()) {
+                        alg.IV = IV;
+                        alg.Key = Key;
+                        decryptor = alg.CreateDecryptor();
+                    }
                     break;
             
                 case "rc2":
-                    alg = new RC2CryptoServiceProvider();
-                    alg.IV = IV;
-                    alg.Key = Key;
-                    decryptor = alg.CreateDecryptor();
+                    using (alg = new RC2CryptoServiceProvider()) {
+                        alg.IV = IV;
+                        alg.Key = Key;
+                        decryptor = alg.CreateDecryptor();
+                    }
                     break;
 
                 case "rijndael":
@@ -61,6 +63,7 @@ namespace prokopyev.Nsudotnet.Enigma {
                 }
             }
             decryptor.Dispose();
+            alg.Dispose();
         }
     }
 }

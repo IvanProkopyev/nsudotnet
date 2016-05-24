@@ -24,17 +24,19 @@ namespace prokopyev.Nsudotnet.Enigma{
                         break;
 
                     case "des":
-                        alg = new DESCryptoServiceProvider();
+                        using (alg = new DESCryptoServiceProvider()) {
                             Key = alg.Key;
                             IV = alg.IV;
                             encryptor = alg.CreateEncryptor();
+                        }
                         break;
 
                     case "rc2":
-                        alg = new RC2CryptoServiceProvider();
+                        using (alg = new RC2CryptoServiceProvider()) {
                             Key = alg.Key;
                             IV = alg.IV;
                             encryptor = alg.CreateEncryptor();
+                        }
                         break;
 
                     case "rijndael":
@@ -71,8 +73,8 @@ namespace prokopyev.Nsudotnet.Enigma{
                     }
                     Console.WriteLine("key-file created");
                 }
-        //        encryptor.Dispose();
-         //       alg.Dispose(); 
+                encryptor.Dispose();
+                alg.Dispose(); 
             }
             catch (ObjectDisposedException e) {
                 Console.WriteLine("Caught: {0}", e.Message);
