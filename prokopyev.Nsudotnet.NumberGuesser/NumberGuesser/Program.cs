@@ -9,72 +9,75 @@ namespace NumberGuesser
     class Program
     {
 
-        public static string DisgustingQuotes() {
-            String[] quotes = { "u a fckn looser!", "What the hell are you doing?", "Get the hell out of here!", "Come on, you fuckin’ pussy!" , "Bastard", "Bullshit" };
+        public static void PrintDisgustingQuotes(String name) {
+            String[] quotes = { " {0}, u a fckn looser!",
+                "What the hell are you doing, {0} ?",
+                "Get the hell out of here!",
+                "Come on, {0}, you fuckin’ pussy!" ,
+                " {0}, u a Bastard",
+                "Bullshit- it's u, {0}" };
             Random random = new Random();
             int number = random.Next(0, quotes.Length);
-            return quotes[number];
-
-
+            Console.WriteLine(quotes[number], name);
+            
         }
 
+
         public static void Game(String name) {
+            
             int[] usernumbers = new int[1000];
-            int userNumber;
+            int usernumber;
             Random random = new Random();
             int number = random.Next(0, 100);
-            Console.WriteLine(number);
+            DateTime start = DateTime.Now;
             for (int i = 1; i < 1000; ++i) {
                 Console.WriteLine("Enter number:");
                 String command = Console.ReadLine();
-
                 if (command.Equals("q")){
                     Console.WriteLine("Sorry, bruh...");
                     return;
-
                 }
-
-                if (!Int32.TryParse(command, out userNumber)) {
+                if (!Int32.TryParse(command, out usernumber)) {
                     Console.WriteLine("Hey, bro! Use correct commands!");
                 }
-
-                else
-                {
-                    userNumber = int.Parse(command);
-                    usernumbers[i - 1] = userNumber;
-                    if (userNumber < number)
-                    {
+                else{
+                    usernumber = int.Parse(command);
+                    usernumbers[i - 1] = usernumber;
+                    if (usernumber < number){
                         Console.WriteLine("bol'she");
-                        if (i % 4 == 0)
-                        {
-                            Console.WriteLine(name + " " + DisgustingQuotes());
+                        if (i % 4 == 0){
+                            PrintDisgustingQuotes(name);
                         }
                     }
-                    if (userNumber > number)
-                    {
+                    if (usernumber > number){
                         Console.WriteLine("men'she");
-                        if (i % 4 == 0)
-                        {
-                            Console.WriteLine(name + " " + DisgustingQuotes());
+                        if (i % 4 == 0){
+                            PrintDisgustingQuotes(name);
                         }
                     }
 
-                    if (userNumber == number)
-                    {
-                        Console.WriteLine("ti smog tol'ko lish s " + i + "-oi popitky, neudashnik!");
-                        for (int k = 0; k < i; ++k)
-                        {
-                            Console.WriteLine(usernumbers[k]);
+                    if (usernumber == number){
+                        TimeSpan gameTime = DateTime.Now - start;
+                        Console.WriteLine("ti smog tol'ko lish s {0}-oi popitky, neudashnik!", i);
+                        String sign = null;
+                        for (int k = 0; k < i; ++k){
+                            if (usernumbers[k] < number)
+                                sign = "<";
+                            if (usernumbers[k] > number)
+                                sign = ">";
+
+
+                            Console.WriteLine(String.Format("your number is {0} ,{1}", usernumbers[k], sign));
 
                         }
+                        Console.WriteLine(String.Format("your time {0} ", gameTime.TotalMinutes));
                         return;
                     }
                 }
             }
         }
 
-        static void Main(string[] args)
-        {
+        static void Main(string[] args){
             Console.WriteLine("Enter your name pls");
             String username = Console.ReadLine();
             Game(username);
