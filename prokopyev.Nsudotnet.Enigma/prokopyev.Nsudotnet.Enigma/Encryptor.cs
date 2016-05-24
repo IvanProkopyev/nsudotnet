@@ -54,32 +54,30 @@ namespace prokopyev.Nsudotnet.Enigma{
                     Console.WriteLine("incorrect alghorytm name. use (rijndael, rc2, aes, des)");
                     return;
                 }
-                using (FileStream filestream = new FileStream(output, FileMode.Create, FileAccess.Write)) {
-                    using (CryptoStream csEncrypt = new CryptoStream(filestream, encryptor, CryptoStreamMode.Write)) {
+                using (FileStream filestreamout = new FileStream(output, FileMode.Create, FileAccess.Write)) {
+                    using (CryptoStream csEncrypt = new CryptoStream(filestreamout, encryptor, CryptoStreamMode.Write)) {
                         int data;
                         while ((data = fsInput.ReadByte()) != -1) {
                             csEncrypt.WriteByte((byte)data);
                         }
-
                         Console.WriteLine("binary file created");
-                        csEncrypt.Close();
-                        filestream.Close();
-                        fsInput.Close();
+                    
                     }
                 }
-                int i = input.LastIndexOf('\\');
-                int j = input.LastIndexOf('.');
-                string fileKey = @"c:\Users\ivqn\Deskghjrrtop\" + input.Substring(i,input.Length - j-2) + @".key.txt";
+                string path = Path.GetDirectoryName(input);
+                string keyfile = input + ".key.txt";
+                string fileKey = Path.Combine(path, keyfile);
                 using (FileStream fout = new FileStream(fileKey, FileMode.OpenOrCreate, FileAccess.ReadWrite)) {
                     using (StreamWriter sw = new StreamWriter(fout)) {
                         String key = Convert.ToBase64String(Key);
                         String iV = Convert.ToBase64String(IV);
                         sw.WriteLine(key);
                         sw.WriteLine(iV);
-                        sw.Close();
+                       
                     }
-                    fout.Close();
+                  
                     Console.WriteLine("key-file created");
+                    
                 }
             }
         }

@@ -32,8 +32,8 @@ namespace prokopyev.Nsudotnet.Enigma{
                 }
             }
             try {
-                if (!File.Exists(input) || !File.Exists(output)) {
-                    Console.WriteLine("where is IO -files?");
+                if (!File.Exists(input)) {
+                    Console.WriteLine("where is IO -files? pidor");
                     return;
                 }
                 if (mode != "decrypt" && mode != "encrypt") {
