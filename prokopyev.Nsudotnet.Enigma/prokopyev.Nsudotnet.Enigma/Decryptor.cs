@@ -63,6 +63,7 @@ namespace prokopyev.Nsudotnet.Enigma {
                     }
                 }
             }
+            decryptor.Dispose();
         }
     }
 }
