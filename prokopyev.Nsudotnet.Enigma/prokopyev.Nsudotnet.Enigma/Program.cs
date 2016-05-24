@@ -32,10 +32,10 @@ namespace prokopyev.Nsudotnet.Enigma{
                 }
             }
             try {
-                if (!File.Exists(input)) {
-                    Console.WriteLine("where is IO -files? pidor");
-                    return;
-                }
+             //   if (!File.Exists(input)) {
+             //       Console.WriteLine("where is IO -files? pidor");
+             //       return;
+             //   }
                 if (mode != "decrypt" && mode != "encrypt") {
                     Console.WriteLine("incorrect mode!(encrypt or decrypt)");
                     return;
@@ -44,6 +44,7 @@ namespace prokopyev.Nsudotnet.Enigma{
                     Decryptor decryptor = new Decryptor();                   
                     decryptor.Decrypt(type, input, output, keyFile);    
                     Console.WriteLine("file restored");
+                    
                 }
                 
                 //encrypt c:\Users\ivqn\Desktop\text1.txt  aes c:\Users\ivqn\Desktop\text.txt 
