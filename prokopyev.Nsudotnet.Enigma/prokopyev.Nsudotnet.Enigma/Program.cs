@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace prokopyev.Nsudotnet.Enigma{
-    class Program{
+namespace prokopyev.Nsudotnet.Enigma {
+    class Program {
 
-        public static void Main(string[] args){
+        public static void Main(string[] args) {
             String mode = args[0];
-            String input = args[1]; 
+            String input = args[1];
             String type = args[2];
             String output = null;
             String keyFile = null;
@@ -32,29 +32,30 @@ namespace prokopyev.Nsudotnet.Enigma{
                 }
             }
             try {
-             //   if (!File.Exists(input)) {
-             //       Console.WriteLine("where is IO -files? pidor");
-             //       return;
-             //   }
+                //   if (!File.Exists(input)) {
+                //       Console.WriteLine("where is IO -files? pidor");
+                //       return;
+                //   }
                 if (mode != "decrypt" && mode != "encrypt") {
                     Console.WriteLine("incorrect mode!(encrypt or decrypt)");
                     return;
                 }
-                if (mode == "decrypt"){                              
-                    Decryptor decryptor = new Decryptor();                   
-                    decryptor.Decrypt(type, input, output, keyFile);    
-                    
+                if (mode == "decrypt") {
+                    Decryptor decryptor = new Decryptor();
+                    decryptor.Decrypt(type, input, output, keyFile);
+
                 }
-                
+
                 //encrypt c:\Users\ivqn\Desktop\text1.txt  aes c:\Users\ivqn\Desktop\text.txt 
                 if (mode == "encrypt") {
                     Encryptor encryptor = new Encryptor();
                     encryptor.Encrypt(type, input, output);
                 }
-                
-            }catch (Exception e){
+
+            }
+            catch (Exception e) {
                 Console.WriteLine("Error: {0}", e.Message);
             }
-        }             
+        }
     }
 }
