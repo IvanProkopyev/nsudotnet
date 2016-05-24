@@ -63,13 +63,13 @@ namespace prokopyev.Nsudotnet.Enigma{
 
                         Console.WriteLine("binary file created");
                         csEncrypt.Close();
-                            filestream.Close();
-                            fsInput.Close();
+                        filestream.Close();
+                        fsInput.Close();
                     }
                 }
                 int i = input.LastIndexOf('\\');
                 int j = input.LastIndexOf('.');
-                string fileKey = @"c:\Users\ivqn\Desktop\" + input.Substring(i,input.Length - j-2) + @".key.txt";
+                string fileKey = @"c:\Users\ivqn\Deskghjrrtop\" + input.Substring(i,input.Length - j-2) + @".key.txt";
                 using (FileStream fout = new FileStream(fileKey, FileMode.OpenOrCreate, FileAccess.ReadWrite)) {
                     using (StreamWriter sw = new StreamWriter(fout)) {
                         String key = Convert.ToBase64String(Key);
