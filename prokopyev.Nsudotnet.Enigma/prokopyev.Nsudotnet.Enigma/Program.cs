@@ -43,7 +43,6 @@ namespace prokopyev.Nsudotnet.Enigma{
                 if (mode == "decrypt"){                              
                     Decryptor decryptor = new Decryptor();                   
                     decryptor.Decrypt(type, input, output, keyFile);    
-                    Console.WriteLine("file restored");
                     
                 }
                 
