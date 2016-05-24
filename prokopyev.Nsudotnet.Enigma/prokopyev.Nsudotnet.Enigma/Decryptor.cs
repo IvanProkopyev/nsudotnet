@@ -17,10 +17,11 @@ namespace prokopyev.Nsudotnet.Enigma {
             SymmetricAlgorithm alg = null;
             switch (type) {
                 case "aes":
-                    Aes aes = Aes.Create();
+                    using (Aes aes = Aes.Create()) {
                         aes.Key = Key;
                         aes.IV = IV;
                         decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+                    }
                     break;
 
                 case "des":
@@ -40,10 +41,11 @@ namespace prokopyev.Nsudotnet.Enigma {
                     break;
 
                 case "rijndael":
-                    Rijndael r = Rijndael.Create();
+                    using (Rijndael r = Rijndael.Create()) {
                         r.Key = Key;
                         r.IV = IV;
                         decryptor = r.CreateDecryptor();
+                    }
                     
                     break;
                 default:

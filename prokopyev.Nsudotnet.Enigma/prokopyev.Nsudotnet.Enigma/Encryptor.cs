@@ -10,17 +10,18 @@ namespace prokopyev.Nsudotnet.Enigma{
     class Encryptor{
         internal void Encrypt(String mode, String input, String output) {
             //  encrypt c:\Users\ivqn\Desktop\1.jpg  aes c:\Users\ivqn\Desktop\1.bin
-            try {
+     //       try {
                 byte[] Key = null;
                 byte[] IV = null;
                 ICryptoTransform encryptor = null;
                 SymmetricAlgorithm alg = null;
                 switch (mode) {
                     case "aes":
-                        Aes aes = Aes.Create();
-                            Key = aes.Key;
-                            IV = aes.IV;
-                            encryptor = aes.CreateEncryptor();
+                    using (Aes aes = Aes.Create()) {
+                        Key = aes.Key;
+                        IV = aes.IV;
+                        encryptor = aes.CreateEncryptor();
+                    }
                         break;
 
                     case "des":
@@ -40,10 +41,11 @@ namespace prokopyev.Nsudotnet.Enigma{
                         break;
 
                     case "rijndael":
-                        Rijndael r = Rijndael.Create();
-                            Key = r.Key;
-                            IV = r.IV;
-                            encryptor = r.CreateEncryptor();
+                    using (Rijndael r = Rijndael.Create()) {
+                        Key = r.Key;
+                        IV = r.IV;
+                        encryptor = r.CreateEncryptor();
+                    }
                         break;
 
                     default:
@@ -75,10 +77,10 @@ namespace prokopyev.Nsudotnet.Enigma{
                 }
                 encryptor.Dispose();
                 alg.Dispose(); 
-            }
-            catch (ObjectDisposedException e) {
-                Console.WriteLine("Caught: {0}", e.Message);
-            }
+           // }
+         //   catch (ObjectDisposedException e) {
+           //     Console.WriteLine("Caught: {0}", e.Message);
+          //  }
         }
     }       
 }
