@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace prokopyev.Nsudotnet.Enigma {
     class Codetype {
-        public static SymmetricAlgorithm getType(string mode) {
+        public static SymmetricAlgorithm GetType(string mode) {
             switch (mode) {
                 case "aes":
                      return new AesManaged();

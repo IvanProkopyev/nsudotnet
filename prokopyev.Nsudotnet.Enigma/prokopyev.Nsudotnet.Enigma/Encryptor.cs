@@ -9,15 +9,15 @@ using System.Security.Cryptography;
 namespace prokopyev.Nsudotnet.Enigma {
     class Encryptor {
         internal void Encrypt(String mode, String input, String output) {
-            byte[] Key = null;
-            byte[] IV = null;
-            using (SymmetricAlgorithm alg = Codetype.getType(mode)) {
+            byte[] algKey = null;
+            byte[] algIV = null;
+            using (SymmetricAlgorithm alg = Codetype.GetType(mode)) {
                 ICryptoTransform encryptor = alg.CreateEncryptor();
-                Key = alg.Key;
-                IV = alg.IV;
+                algKey = alg.Key;
+                algIV = alg.IV;
                 using (FileStream fsInput = new FileStream(input, FileMode.Open, FileAccess.Read)) {
-                    using (FileStream filestreamout = new FileStream(output, FileMode.Create, FileAccess.Write)) {
-                        using (CryptoStream csEncrypt = new CryptoStream(filestreamout, encryptor, CryptoStreamMode.Write)) {
+                    using (FileStream filestreamOut = new FileStream(output, FileMode.Create, FileAccess.Write)) {
+                        using (CryptoStream csEncrypt = new CryptoStream(filestreamOut, encryptor, CryptoStreamMode.Write)) {
                             int data;
                             while ((data = fsInput.ReadByte()) != -1) {
                                 csEncrypt.WriteByte((byte)data);
@@ -29,12 +29,12 @@ namespace prokopyev.Nsudotnet.Enigma {
             }
 
             string path = Path.GetDirectoryName(input);
-            string keyfile = input + ".key.txt";
-            string fileKey = Path.Combine(path, keyfile);
+            string keyFile = input + ".key.txt";
+            string fileKey = Path.Combine(path, keyFile);
             using (FileStream fout = new FileStream(fileKey, FileMode.Create, FileAccess.Write)) {
                 using (StreamWriter sw = new StreamWriter(fout)) {
-                    string key = Convert.ToBase64String(Key);
-                    string iV = Convert.ToBase64String(IV);
+                    string key = Convert.ToBase64String(algKey);
+                    string iV = Convert.ToBase64String(algIV);
                     sw.WriteLine(key);
                     sw.WriteLine(iV);
                 }
